@@ -13,12 +13,12 @@ import resource from 'vue-resource'
 
 // 关闭生产模式下给出的提示
 Vue.config.productionTip = false
+Vue.use(resource)
 
 /*  定义实例 */
 new Vue({
   el: '#app',
   router,
-  resource,
   components: {App},
   template: '<App/>'
 })
