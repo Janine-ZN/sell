@@ -10,6 +10,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
 
+const express = require('express') // nodejs开发框架express，用来简化操作
+const app = express() // 创建node.js的express开发框架的实例
+var data = require('../data.json')   // 加载本地数据文件
+var seller = data.seller
+var ratings = data.ratings
+var goods = data.goods
+var apiRoutes = express.Router()  // 编写路由
+app.use('/api',apiRoutes)   // 所有通过接口相关的api都会通过api这个路由导向到具体的路由
+
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
 
@@ -22,6 +31,32 @@ const devWebpackConfig = merge(baseWebpackConfig, {
 
   // these devServer options should be customized in /config/index.js
   devServer: {
+    before(app)
+    {
+      app.get('/api/seller',(req,res)=> {
+        // 服务器收到请求后返回给客户端一个 json 数据
+        res.json({
+          // 当我们请求数据正常时，我们通过传递 errno 字符为0表示数据正常
+          errno:0,
+          // 返回json中的卖家数据
+          data:seller
+        })
+      })
+
+      app.get('/api/goods',(req,res) =>{
+        res.json({
+          errno:0,
+          data:goods
+        })
+      })
+
+      app.get('/api/ratings',function (req,res) {
+        res.json({
+          errno:0,
+          data:ratings
+        });
+      });
+    },
     clientLogLevel: 'warning',
     historyApiFallback: {
       rewrites: [
@@ -93,3 +128,4 @@ module.exports = new Promise((resolve, reject) => {
     }
   })
 })
+

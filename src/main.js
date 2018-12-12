@@ -6,6 +6,10 @@ import Vue from 'vue'
 import App from './App'
 // 引入路由设置
 import router from './router'
+// 引入样式
+import 'common/stylus/index.styl'
+// 引入 resource
+import resource from 'vue-resource'
 
 // 关闭生产模式下给出的提示
 Vue.config.productionTip = false
@@ -14,6 +18,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  resource,
   components: {App},
   template: '<App/>'
 })

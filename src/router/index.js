@@ -9,8 +9,11 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
+    // 设置默认路由
+    {path: '/', redirect: 'goods'},
     {path: '/goods', component: goods},
     {path: '/ratings', component: ratings},
     {path: '/seller', component: seller}
-  ]
+  ],
+  linkActiveClass: 'active'
 })
